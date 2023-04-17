@@ -147,10 +147,27 @@ public class FitnessTest {
     }
 }
 
+//---------------SOQL queries-----------------------
+//basic
+SELECT Name, Company, Email, Status FROM Lead
 
+
+// OR Keyword
+SELECT Name, Status, Company, Email FROM Lead WHERE Status='Closed - Converted' OR Status='Closed - Not Converted'
+
+// OR and AND Keyword
+SELECT Name, Status, LeadSource, Company, Email FROM Lead WHERE (Status='Closed - Converted' OR Status='Closed - Not Converted') AND LeadSource='Web'
+
+// IN Operator
+SELECT Name, Status, LeadSource, Company, Email FROM Lead WHERE Status IN ('Closed - Converted', 'Closed - Not Converted') AND LeadSource='Web'
 
 // LIKE Operator
 SELECT Name, Status, LeadSource, Company, Email FROM Lead WHERE Status LIKE 'Closed%' AND LeadSource='Web'
+
+// LIKE Operator
+SELECT Name, Status, LeadSource, Company, Email FROM Lead WHERE Status LIKE 'Closed%' AND LeadSource='Web'
+
+//--------------------------------------------------------------------------------------------------------------------
 
 //......................ORDER BY..................................................................................
 // Sorting by Name
