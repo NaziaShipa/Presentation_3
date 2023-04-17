@@ -1,0 +1,56 @@
+// LIKE Operator
+SELECT Name, Status, LeadSource, Company, Email FROM Lead WHERE Status LIKE 'Closed%' AND LeadSource='Web'
+
+//......................ORDER BY..................................................................................
+// Sorting by Name
+SELECT Name, Status, LeadSource, Company, Email FROM Lead ORDER BY Name
+
+// Sorting by Name in descending order
+SELECT Name, Status, LeadSource, Company, Email FROM Lead ORDER BY Name DESC
+
+//Order by clause with Where clause
+SELECT Name, Status, Company, Email FROM Lead WHERE Status='Closed - Converted' ORDER BY Name
+
+//.......................limit....................................................................................
+
+// Limit 10 rows
+SELECT Name, Status, LeadSource, Company, Email, CreatedDate FROM Lead LIMIT 10
+
+
+//...............................offset....................................................................
+// OFFSET 5
+SELECT Name, Status, LeadSource, Company, Email, CreatedDate FROM Lead OFFSET 5
+
+// Get latest 5 records and skip first 5
+SELECT Name, Status, LeadSource, Company, Email, CreatedDate FROM Lead ORDER BY CreatedDate DESC LIMIT 5 OFFSET 5
+
+//..................................date literals..............................................................
+
+// Get all leads created on 15th June 2020
+SELECT Name, Status, LeadSource, Company, Email, CreatedDate FROM Lead WHERE CreatedDate>2020-06-15T00:00:00.000+0000
+
+// Get all leads created today
+SELECT Name, Status, LeadSource, Company, Email, CreatedDate FROM Lead WHERE CreatedDate=TODAY
+
+// Get all leads created after yesterday
+SELECT Name, Status, LeadSource, Company, Email, CreatedDate FROM Lead WHERE CreatedDate>YESTERDAY
+
+// Get all leads created in last 10 days
+SELECT Name, Status, LeadSource, Company, Email, CreatedDate FROM Lead WHERE CreatedDate=LAST_N_DAYS:10
+
+
+//..................................parent to child..................................................
+
+// Get all related contacts of an account
+SELECT Name, Phone, Website, (SELECT Name, Department, Email FROM Contacts) FROM Account
+
+// Get all related contacts (with where clause) of an account (with where clause)
+SELECT Name, Phone, Website, (SELECT Name, Department, Email FROM Contacts WHERE Department='Finance') FROM Account WHERE Name='United Oil & Gas, UK'
+
+//............................Child to parent.............................................................
+
+// Get account information from contact
+SELECT Name, Phone, Department, Account.Name, Account.Website FROM Contact
+
+// get grandparent (user) object details
+SELECT Name, Phone, Department, Account.Name, Account.Website, Account.Owner.Name FROM Contact
